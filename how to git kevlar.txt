@@ -1,0 +1,56 @@
+este es el repo, por si por alguna razon lo quieren ver desde el browser
+https://github.com/redonditodericota/kevlar/
+
+paso 0: crearse una cuenta en github
+https://github.com/
+y pasarme el mail para q les de acceso
+
+paso 1:  descargar e instalar github desktop. Loguearse
+https://desktop.github.com/
+
+paso 2:	Clone a repository from the internet 
+Elegir redonditodericota/kevlar (deberia estar en your repositories, github.com)
+Elegir un Local Path (el q viene por default sirve pero si quieren pueden cambiarlo)
+Clone
+
+paso 3: Desde github desktop hay una solapa desplegable que dice "Current branch master", tocan ahi y ponen New branch y le ponen su nombre. 
+
+Ahora estan en su propia rama, que nace de la rama master. Todos los cambios que hagan en la carpeta que pusieron en local path (paso 2) (desde github hay un boton q dice "Show in Explorer", tambien puedne hacer "Repository > Show in Explorer"), ya sea crear editar o eliminar archivos, van a aparecer en github. Cuando tengan cambios listos para subir lo que tienen que hacer es:
+
+paso 4: En github desktop deberian poder ver los cambios q hicieron y deberia haber un boton azul abajo a la izquierda q dice "Commit to nombre". Escriben un Summary y/o Description y apretan ese boton
+
+paso 5: Apretan el boton q dice "Publish Branch", arriba a la derecha
+
+paso 6: Me avisan para que mezcle su rama con su codigo en la rama master, yo les aviso cuando esta hecho. 
+(((
+Si prefieren pueden mezclarlo directamente ustedes, hay que tocar en "Current branch", ir a la rama de master (doble click, ver que quede marcada), apretar el boton que dice "Choose a branch to merge into master", elegir la rama en cuestion y apretar el boton azul "Merge nombre into master", y despues apretar "Push origin". Recuerden volver a su propia rama despues o cuando vayan a escribir mas codigo.
+)))
+
+Ahora en teoria el codigo nuevo esta en la rama master. Ahora les explico como hacer para actualizar su propia rama con el codigo nuevo que este en master (por ejemplo, si alguien más subió cambios)
+
+paso 7: Desde github desktop, apretan el boton q dice Fetch origin
+
+paso 8: Current branch, asegurarse de estar parados en su rama, y apreten el boton "Choose a branch to merge into nombre", y eligen master y aprietan el boton "Merge master into nombre"
+
+Listo. Ya tienen su rama actualizada con lo ultimo de master. Ahora pueden tocar mas codigo e ir al paso 4-5-6 para subirlo.
+
+Cada vez que se sientan a trabajar, es bueno hacer los pasos 7-8 por las dudas
+
+Seamos comunicativos y usemos el discord para avisar cuando subimos algo 
+
+
+Opcional: Si quieren poder ver el repositorio y los cambios de manera mas visual y prolija, les recomiendo mucho instalar el gitkraken. Es gratis y super facil lo unico q tienen q hacer es abriro y poner "log in with github", luego poner "Open Repository" y elegir la carpeta donde tienen el repo (la de "Local Path" en el paso 2)
+https://www.gitkraken.com/download/windows64
+
+Tambien pueden usar el gitkraken para hacer todo lo que hacian en github desktop. En mi opinion es mas visual y mas facil. Breve guia de uso de gitkraken:
+
+-Cambiarse de rama con dobleclick en el nombre de la rama
+
+-Fetch (traer cambios de la nube): Hay un boton arriba en el medio q dice "Pull" o "Fetch". Apretar en el desplegable de ese boton y elegir "Fetch all". Eso te trae los datos. Van a ver q en el grafico arbol ahora les aparece dos veces "Master" (si es q habia cosas nuevas), una tiene un dibujo de una computadorita (local) y otra tiene un dibujo mas loco (remoto). Le hacen doble click a la de remoto (deberia estar mas arriba que la local), ponen el boton "Reset local to here", y listo.
+
+-Merge(o mezclar) se hace arrastrando un nombre de rama hacia otro nombre de rama (por ejemplo yo arrastraria master hacia pablo, para traerme el codigo nuevo a mi rama) y eligiendo la opcion MERGE
+
+-Subir cambios: van a ver en el gitkraken en el grafico arbol hay muchos circulos (esos son los commits), circulos pequeños (son los merge), y van a ver las ramas con forma de rama. 
+Estando parados en su rama, si hicieron cambios en los archivos del repositorio, desde gitkraken van a ver un circulo hueco con borde punteado, arriba de todo del grafico. Click ahi. 
+A la derecha de todo, hay un boton q dice "Stage all changes", lo apretan. Abajo a la derecha, donde dice "Summary" y "Description", escriben algo y apretan el boton "Commit changes ..." 
+Despues, volvieno al grafico de arbol, van a ver su rama dos veces una "local"(computadorita) y otra "remoto"(dibujito loco). Hacen click derecho en la local (deberia estar mas arriba q la remota) y ponen "Push" para subir los cambios.
