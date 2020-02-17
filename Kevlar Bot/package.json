@@ -11,6 +11,8 @@
   "dependencies": {
     "discord.js": "^11.5.1",
     "discord.js-commando": "^0.10.0",
-    "jimp": "^0.9.3"
+    "jimp": "^0.9.3",
+    "sequelize": "^5.21.4",
+    "sqlite3": "^4.1.1"
   }
 }
