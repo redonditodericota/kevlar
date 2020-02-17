@@ -1,8 +1,9 @@
 const commando = require('discord.js-commando');
 const path = require('path');
+const config = require('./config.json');
 const bot = new commando.Client({
-    commandPrefix:'kev',
-    owner: '539148241279778829',
+    commandPrefix:(config.prefix),
+    owner: (config.ownerID),
 });
 
 bot.registry.registerDefaultTypes()
@@ -25,4 +26,4 @@ bot.on('message', (message) => {
     }
 })
 
-bot.login('Njc4NTkxOTQxODg5MjI4ODIx.XklGBQ.XsizqR4VMboE5IkOJEO-BkxKyCc');
+bot.login(config.token); 
