@@ -45,6 +45,7 @@ bot.once('ready', () => {
     inventario.sync();
 });
 
+/*
 bot.on('message', async message => {
 	if (message.content.startsWith(config.prefix)) {
 		const input = message.content.slice(config.prefix.length).split(' ');
@@ -66,11 +67,12 @@ bot.on('message', async message => {
 		}
 	}
 });
+*/
 
 ////////////////////////////////////////////////////
 
 bot.on('message', (message) => {
-    if(message.content == 'juanma'){
+    if(message.content.toLowerCase().includes('juanma')){
         message.channel.send ('altogato');
     }
 })
