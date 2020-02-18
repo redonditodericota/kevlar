@@ -16,7 +16,7 @@ class DadoCommand extends commando.Command {
 			caras = caras + args[i];
 		}
         var dado = Math.floor(Math.random() * caras) + 1;
-		if(Number.isNaN(dado)){
+		if(Number.isNaN(dado) || caras == "" || caras == null){
 			dado = Math.floor(Math.random() * 6) + 1;
 			caras = 6;
 		}
