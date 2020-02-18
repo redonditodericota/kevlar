@@ -2,9 +2,7 @@
 const commando = require('discord.js-commando');
 const path = require('path');
 const config = require('./config.json');
-const sqlite3 = require('sqlite3').verbose();
-const dbh = require('./databaseHelper.js'); //este es nuestro
-
+const dbh = require('./databaseHelper.js'); 
 
 //CORE
 
@@ -27,7 +25,8 @@ function initializeBot(){
 
 	bot.registry.registerDefaultTypes()
 		.registerGroups([
-			['tradeo', 'Trade']
+			['tradeo', 'Trade'],
+			['gamestatus', 'Game Status']
 		])
 		.registerDefaultGroups()
 		.registerDefaultCommands()
@@ -45,8 +44,7 @@ function initializeCoinsDatabase(){
 	let db = dbh.openDatabase();
 	
 	//los create table se correrian una vez sola para armar la base, no se si a la larga tiene mucho sentido que este metido en el codigo de ejecucion.
-	//si se quiere resetear la base de datos, hay q eliminar el archivo db/sqlite.db
-	db.run('CREATE TABLE if not exists tcoins(userid integer primary key, amount integer)', [], function(err) {
+	db.run('CREATE TABLE if not exists tcoins (userid integer primary key, amount integer)', [], function(err) {
 		if (err) {
 			return console.log(err.message);
 		}
