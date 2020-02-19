@@ -12,16 +12,7 @@ class newgameCommand extends commando.Command {
     }
 
     async run(message, args) {
-        let db = dbh.openDatabase();
-        let id = -1;
-        db.run(`DELETE FROM tcoins`, [], function(err) {
-            if (err) {
-             return console.error(err.message)
-            }
-            console.log(`Row(s) deleted ${this.changes}`);
-        });
-        console.log('New Game Created');
-        dbh.closeDatabase(db);
+        dbh.resetDatabase();
         message.channel.send(message.author.username + ' creo un nuevo juego');
     }
 }
