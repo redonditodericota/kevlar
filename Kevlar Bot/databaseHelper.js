@@ -11,28 +11,35 @@ module.exports = {
     closeDatabase,
 	
 	resetDatabase:function() {
+		//bbdd principal
 		let db = openDatabase()        
 		db.serialize(() => {
 			//drops
 			db.run('DROP TABLE IF EXISTS tcoins', [], function(err) {
-				if (err) {
-				 return console.error(err.message)
-				}
-				console.log(`Drop ${this.changes}`);
+				errorHandling(err,db)
+			})
+			.run('DROP TABLE IF EXISTS tordenes', [], function(err) {
+				errorHandling(err,db)
 			})
 			//creates
 			.run('CREATE TABLE IF NOT EXISTS tcoins (userid INTEGER PRIMARY KEY, amount INTEGER)', [], function(err) {
-				if (err) {
-					return console.log(err.message);
-				}
-				console.log(`Table creation ok`);
-				closeDatabase(db);
+				errorHandling(err,db)
+			})
+			.run('CREATE TABLE IF NOT EXISTS tordenes (ordenid INTEGER PRIMARY KEY, userid integer, orden text)', [], function(err) {
+				errorHandling(err,db)
 			})
 			//inserts
-			.run('INSERT INTO tcoins (userid,amount) VALUES (-1,0)'); //TO-DO: esto es solo si viene de newgame y habria q recibir la lista de IDs
+			 //TO-DO: inserts es solo si viene de newgame y habria q recibir la lista de IDs
+			.run('INSERT INTO tcoins (userid,amount) VALUES (-1,0)', [], function(err) {
+				errorHandling(err,db)
+			})
 		
 		});
-    }
+		
+    },
+	
+	guardarOrden,
+	leerOrdenes
 /* otros ejemplos
 openDatabase:function() {
 	return new sqlite3.Database('./db/sqlite.db', (err) => {
@@ -53,13 +60,18 @@ closeDatabase(db) {
 */
 }
 
+function errorHandling(err, db){
+	if (err) {
+		closeDatabase(db);
+		return console.error(err.message);
+	}
+}
 
 function openDatabase(){
 	return new sqlite3.Database('./db/sqlite.db', (err) => {
 		if (err) {
 			return console.error(err.message);
 		}
-		console.log('Connected to SQlite database.');
 	});
 }
 
@@ -68,6 +80,28 @@ function closeDatabase(db){
 		if (err) {
 			return console.error(err.message);
 		}
-		console.log('Close the database connection.');
 	});
+}
+
+function guardarOrden(orden){
+	let db = openDatabase();
+	db.run("INSERT INTO tordenes (userid, orden) VALUES (-1, '"+orden+"')", [], function(err) {
+		errorHandling(err,db)
+	})
+	closeDatabase(db);
+}
+function leerOrdenes(callback){
+	let db = openDatabase();
+	let ret = "";
+	//TO-DO: Esto tambien tiene q filtrar por userid
+	db.all("SELECT orden FROM tordenes", [], function(err, rows) {
+		errorHandling(err, db);
+		rows.forEach((row) => {
+			ret += row.orden + "\n";
+		});
+		closeDatabase(db);
+		if (ret == "") ret = "No hay ordenes";
+		callback(ret);
+	});
+	
 }

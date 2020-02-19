@@ -25,6 +25,7 @@ function initializeBot(){
 
 	bot.registry.registerDefaultTypes()
 		.registerGroups([
+			['ordenes', 'Ordenes'],
 			['tradeo', 'Trade'],
 			['gamestatus', 'Game Status']
 		])
