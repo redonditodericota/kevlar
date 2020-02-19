@@ -8,7 +8,7 @@ const dbh = require('./databaseHelper.js');
 
 const bot = initializeBot();
 
-initializeCoinsDatabase();
+dbh.resetDatabase();
 
 juanmaFeature();
 
@@ -25,6 +25,7 @@ function initializeBot(){
 
 	bot.registry.registerDefaultTypes()
 		.registerGroups([
+			['ordenes', 'Ordenes'],
 			['tradeo', 'Trade'],
 			['gamestatus', 'Game Status']
 		])
@@ -37,21 +38,6 @@ function initializeBot(){
 		 bot.user.setActivity('kevlar');
 	});
 	return bot
-}
-
-function initializeCoinsDatabase(){
-	// https://www.sqlitetutorial.net/sqlite-nodejs/
-	let db = dbh.openDatabase();
-	
-	//los create table se correrian una vez sola para armar la base, no se si a la larga tiene mucho sentido que este metido en el codigo de ejecucion.
-	db.run('CREATE TABLE if not exists tcoins (userid integer primary key, amount integer)', [], function(err) {
-		if (err) {
-			return console.log(err.message);
-		}
-		console.log(`Table creation ok`);
-	});
-
-	dbh.closeDatabase(db);
 }
 
 

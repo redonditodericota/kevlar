@@ -1,6 +1,7 @@
 const commando = require('discord.js-commando');
 const sqlite3 = require('sqlite3');
 const dbh = require('../../databaseHelper.js');
+const utils = require('../../utils.js');
 
 class minarCommand extends commando.Command {
     constructor(bot) {
@@ -13,13 +14,11 @@ class minarCommand extends commando.Command {
     }
 
     async run(message, args) {
-        var coins = Math.floor(Math.random() * 12) + 1;
+        var coins = utils.tirarDados(12)
         message.channel.send('Bien ' + message.author.username + ' minaste ' + coins + ' coins.');
 		let db = dbh.openDatabase();
-		//estas dos queries estan para el orto. Es solo para ver si anda. Deberia buscar el usuario id de discord y usar eso en vez de -1
-		db.run('insert into tcoins (userid,amount) select -1,0 where not exists (select 1 from tcoins where userid=-1)');
-		db.run('update tcoins set amount = amount + '+coins+' where userid=-1');
-		console.log('update tcoins set amount = amount + '+coins+' where userid=-1')
+		//TO-DO: buscar el usuario id de discord o playerid y usar eso en vez de -1
+		db.run('UPDATE tcoins SET amount = amount + '+coins+' WHERE userid=-1');
 		dbh.closeDatabase(db);
     }
 }
