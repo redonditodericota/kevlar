@@ -1,6 +1,7 @@
 const commando = require('discord.js-commando');
 const sqlite3 = require('sqlite3');
 const dbh = require('../../databaseHelper.js');
+const utils = require('../../utils.js');
 
 class minarCommand extends commando.Command {
     constructor(bot) {
@@ -13,7 +14,7 @@ class minarCommand extends commando.Command {
     }
 
     async run(message, args) {
-        var coins = Math.floor(Math.random() * 12) + 1;
+        var coins = utils.tirarDados(12)
         message.channel.send('Bien ' + message.author.username + ' minaste ' + coins + ' coins.');
 		let db = dbh.openDatabase();
 		//TO-DO: buscar el usuario id de discord o playerid y usar eso en vez de -1

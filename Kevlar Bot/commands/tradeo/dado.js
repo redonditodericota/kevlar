@@ -1,4 +1,5 @@
 const commando = require('discord.js-commando');
+const utils = require('../../utils.js');
 
 class DadoCommand extends commando.Command {
     constructor(bot) {
@@ -6,21 +7,17 @@ class DadoCommand extends commando.Command {
             name: 'dado',
             group: 'tradeo',
             memberName: 'dado',
-            description: 'Tira un dado, si no hay parametro es D6'
+            description: 'Ejemplos: para tirar 1d6: !dado · para tirar 1d4: !dado 4 · para tirar 3d8: !dado 8 3'
         });
     }
 
     async run(message, args) {
-		var caras = "";
-		for (var i=0; args[i] != undefined; i++){
-			caras = caras + args[i];
-		}
-        var dado = Math.floor(Math.random() * caras) + 1;
-		if(Number.isNaN(dado) || caras == "" || caras == null){
-			dado = Math.floor(Math.random() * 6) + 1;
-			caras = 6;
-		}
-        message.reply("Tiraste un " + dado + " de un D" + caras);
+		var caras = 6;
+		var cantidad = 1;
+		const argsArray = args.trim().split(/ +/g);
+		if (Number.isInteger(Number.parseInt(argsArray[0]))) caras = argsArray[0];
+		if (Number.isInteger(Number.parseInt(argsArray[1]))) cantidad = argsArray[1];
+        message.reply("Tiraste " + utils.tirarDados(caras,cantidad) + " de "+cantidad+"D" + caras);
     }
 }
 
