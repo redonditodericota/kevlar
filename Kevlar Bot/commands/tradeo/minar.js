@@ -1,5 +1,4 @@
 const commando = require('discord.js-commando');
-const sqlite3 = require('sqlite3');
 const dbh = require('../../databaseHelper.js');
 const utils = require('../../utils.js');
 
@@ -14,11 +13,16 @@ class minarCommand extends commando.Command {
     }
 
     async run(message, args) {
-        var coins = utils.tirarDados(12)
-        message.channel.send('Bien ' + message.author.username + ' minaste ' + coins + ' coins.');
+        if(message.content.toLowerCase().includes('ataque')){
+            var caras = (10);
+        }
+        else {var caras = (1)};
+
+        var add = utils.tirarDados(caras)
+        message.channel.send('Bien ' + message.author.username + ' minaste ' + add + ' coins.');
 		let db = dbh.openDatabase();
 		//TO-DO: buscar el usuario id de discord o playerid y usar eso en vez de -1
-		db.run('UPDATE tcoins SET amount = amount + '+coins+' WHERE userid=-1');
+		db.run('UPDATE tcoins SET coinsAmount = coinsAmount +'+add+' WHERE userid=-1');
 		dbh.closeDatabase(db);
     }
 }

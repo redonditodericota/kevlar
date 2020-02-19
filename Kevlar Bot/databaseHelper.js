@@ -21,16 +21,28 @@ module.exports = {
 			.run('DROP TABLE IF EXISTS tordenes', [], function(err) {
 				errorHandling(err,db)
 			})
+			.run('DROP TABLE IF EXISTS tmapa', [], function(err) {
+				errorHandling(err,db)
+			})
+			.run('DROP TABLE IF EXISTS tlog', [], function(err) {
+				errorHandling(err,db)
+			})
 			//creates
-			.run('CREATE TABLE IF NOT EXISTS tcoins (userid INTEGER PRIMARY KEY, amount INTEGER)', [], function(err) {
+			.run('CREATE TABLE IF NOT EXISTS tcoins (userid INTEGER PRIMARY KEY, coinsAmount INTEGER, ataqueAmount INTEGER, defensaAmount INTEGER, explorarAmount INTEGER, influenciaAmount INTEGER, color TEXT, terrenosAmount INTEGER, liderBool INTEGER, beneficiarioBool INTEGER, ballotageBool INTEGER)', [], function(err) {
 				errorHandling(err,db)
 			})
 			.run('CREATE TABLE IF NOT EXISTS tordenes (ordenid INTEGER PRIMARY KEY, userid integer, orden text)', [], function(err) {
 				errorHandling(err,db)
 			})
+			.run('CREATE TABLE IF NOT EXISTS tmapa (terrenoid INTEGER PRIMARY KEY, userid integer, orden text)', [], function(err) {
+				errorHandling(err,db)
+			})
+			.run('CREATE TABLE IF NOT EXISTS tlog (logid INTEGER PRIMARY KEY, userid integer, orden text)', [], function(err) {
+				errorHandling(err,db)
+			})
 			//inserts
 			 //TO-DO: inserts es solo si viene de newgame y habria q recibir la lista de IDs
-			.run('INSERT INTO tcoins (userid,amount) VALUES (-1,0)', [], function(err) {
+			.run('INSERT INTO tcoins (userid,coinsAmount,ataqueAmount,defensaAmount,explorarAmount,influenciaAmount) VALUES (-1,0,0,0,0,0)', [], function(err) {
 				errorHandling(err,db)
 			})
 		

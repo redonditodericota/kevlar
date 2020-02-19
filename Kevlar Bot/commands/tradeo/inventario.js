@@ -15,7 +15,7 @@ class inventarioCommand extends commando.Command {
     async run(message, args) {
 		var total;
 		let db = dbh.openDatabase();
-		let sql = 'SELECT SUM(amount) AS total FROM tcoins WHERE userid = -1'; //TODO: el userid tiene q ser el del usuario de discord
+		let sql = 'SELECT SUM(coinsAmount) AS total FROM tcoins WHERE userid = -1'; //TO-DO: el userid tiene q ser el del usuario de discord
 		db.get(sql, [], (err, row) => {
 			if (err) {
 				throw err;
