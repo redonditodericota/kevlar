@@ -2,7 +2,7 @@
 const commando = require('discord.js-commando');
 const path = require('path');
 const config = require('./config.json');
-const dbh = require('./databaseHelper.js'); 
+const dbh = require('./databaseHelper.js');
 
 //CORE
 
@@ -12,7 +12,7 @@ dbh.resetDatabase();
 
 juanmaFeature();
 
-bot.login(config.token); 
+bot.login(config.token);
 
 
 //FUNCIONES:
