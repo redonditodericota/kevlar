@@ -13,16 +13,29 @@ class minarCommand extends commando.Command {
     }
 
     async run(message, args) {
-        if(message.content.toLowerCase().includes('ataque')){
-            var caras = (10);
+        var recurso = ['ataque','defensa','explorar','influencia','coins'];
+        var dado = [4,8,6,20,12];
+        var i=0;
+        var caras;
+        while (i<5){
+            if(message.content.toLowerCase().includes(recurso[i])){
+            var caras = dado[i];
+            break;
+            }
+            i++;
         }
-        else {var caras = (1)};
-
+        if (caras == null || caras == undefined){
+            message.channel.send('Indicar recurso (ataque, defensa, explorar, influencia o coins) ej: k minar ataque');
+            return;
+        }
+        var tableAmount = ['ataqueAmount','defensaAmount','explorarAmount','influenciaAmount','coinsAmount']
         var add = utils.tirarDados(caras)
         message.channel.send('Bien ' + message.author.username + ' minaste ' + add + ' coins.');
 		let db = dbh.openDatabase();
-		//TO-DO: buscar el usuario id de discord o playerid y usar eso en vez de -1
-		db.run('UPDATE tcoins SET coinsAmount = coinsAmount +'+add+' WHERE userid=-1');
+        //TO-DO: buscar el usuario id de discord o playerid y usar eso en vez de -1
+        var query = 'UPDATE tcoins SET '+tableAmount[i]+' = '+tableAmount[i]+' +'+add+' WHERE userid=-1'
+        console.log(query)
+        db.run(query);
 		dbh.closeDatabase(db);
     }
 }
