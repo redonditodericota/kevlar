@@ -8,7 +8,7 @@ class minarCommand extends commando.Command {
             name: 'minar',
             group: 'tradeo',
             memberName: 'minar',
-            description: 'Mina un D12 de coins :star_struck:'
+            description: 'Mina un D4 de ataque, un D8 de defensa, un D6 de explorar, un D20 de influencia o un D12 de coins :star_struck:'
         });
     }
 
@@ -40,4 +40,7 @@ class minarCommand extends commando.Command {
     }
 }
 
+
+
 module.exports = minarCommand;
+
