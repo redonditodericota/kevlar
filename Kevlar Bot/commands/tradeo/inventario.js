@@ -16,7 +16,7 @@ class inventarioCommand extends commando.Command {
 		var tableAmount = ['ataqueAmount','defensaAmount','explorarAmount','influenciaAmount','coinsAmount'];
 		let db = dbh.openDatabase();
 		var total =[];
-		let sql = 'SELECT SUM('+tableAmount[0]+') AS a, SUM('+tableAmount[1]+') AS b, SUM('+tableAmount[2]+') AS c, SUM('+tableAmount[3]+') AS d, SUM('+tableAmount[4]+') AS e FROM tcoins WHERE userid = -1' //TO-DO: el userid tiene q ser el del usuario de discord 
+		let sql = 'SELECT SUM('+tableAmount[0]+') AS a, SUM('+tableAmount[1]+') AS b, SUM('+tableAmount[2]+') AS c, SUM('+tableAmount[3]+') AS d, SUM('+tableAmount[4]+') AS e FROM tcoins WHERE userid = 0' //TO-DO: el userid tiene q ser el del usuario de discord 
 		db.get(sql, [], (err, row) => {
 				if (err) {
 					throw err;

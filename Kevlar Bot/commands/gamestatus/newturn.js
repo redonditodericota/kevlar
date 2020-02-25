@@ -30,9 +30,9 @@ function adjudicarRecursos(){
     }
     console.log(add[0],add[1],add[2],add[3],add[4])
 	let db = dbh.openDatabase();
-        //TO-DO: buscar el usuario id de discord o playerid y usar eso en vez de -1
+        //TO-DO: buscar el usuario id de discord o playerid y usar eso en vez de 0
     for (i=0;i<5;i++){
-        var query = 'UPDATE tcoins SET ('+tableAmount[i]+') = '+tableAmount[i]+' +'+add[i]+' WHERE userid=-1'
+        var query = 'UPDATE tcoins SET ('+tableAmount[i]+') = '+tableAmount[i]+' +'+add[i]+' WHERE userid=0'
         db.run(query);
         console.log(query)
     };

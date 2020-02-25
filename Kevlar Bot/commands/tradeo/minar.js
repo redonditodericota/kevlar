@@ -31,9 +31,9 @@ class minarCommand extends commando.Command {
         var tableAmount = ['ataqueAmount','defensaAmount','explorarAmount','influenciaAmount','coinsAmount']
         var add = utils.tirarDados(caras)
         message.channel.send('Bien ' + message.author.username + ' minaste ' + add + ' coins.');
-		let db = dbh.openDatabase();
-        //TO-DO: buscar el usuario id de discord o playerid y usar eso en vez de -1
-        var query = 'UPDATE tcoins SET '+tableAmount[i]+' = '+tableAmount[i]+' +'+add+' WHERE userid=-1'
+        let db = dbh.openDatabase();
+        var query = 'UPDATE tcoins SET '+tableAmount[i]+' = '+tableAmount[i]+' +'+add+' WHERE userid=0'
+        //var query = 'UPDATE tcoins SET '+tableAmount[i]+' = '+tableAmount[i]+' +'+add+' WHERE nick="'+message.author.username+'"'
         console.log(query)
         db.run(query);
 		dbh.closeDatabase(db);

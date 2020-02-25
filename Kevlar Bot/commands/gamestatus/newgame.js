@@ -1,6 +1,9 @@
 const commando = require('discord.js-commando');
 const dbh = require('../../databaseHelper.js');
 
+
+
+
 class newgameCommand extends commando.Command {
     constructor(bot) {
         super(bot, {
@@ -15,9 +18,11 @@ class newgameCommand extends commando.Command {
         let db = dbh.openDatabase();
         dbh.resetDatabase();
         console.log('New Game Created');
-        dbh.closeDatabase(db);
         message.channel.send(message.author.username + ' creo un nuevo juego');
+        message.channel.send('Para ingresar al juego enviar comando "newplayer"')
+        dbh.closeDatabase(db);
     }
-}
+};
 
-module.exports = newgameCommand;
+
+module.exports = newgameCommand

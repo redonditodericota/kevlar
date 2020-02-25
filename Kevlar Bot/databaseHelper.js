@@ -8,7 +8,9 @@ module.exports = {
 	
     openDatabase,
 
-    closeDatabase,
+	closeDatabase,
+	
+	errorHandling,
 	
 	resetDatabase:function() {
 		//bbdd principal
@@ -28,7 +30,7 @@ module.exports = {
 				errorHandling(err,db)
 			})
 			//creates
-			.run('CREATE TABLE IF NOT EXISTS tcoins (userid INTEGER PRIMARY KEY, coinsAmount INTEGER, ataqueAmount INTEGER, defensaAmount INTEGER, explorarAmount INTEGER, influenciaAmount INTEGER, terrenosAmount INTEGER, liderBool INTEGER, beneficiarioBool INTEGER, ballotageBool INTEGER)', [], function(err) {
+			.run('CREATE TABLE IF NOT EXISTS tcoins (userid INTEGER PRIMARY KEY, coinsAmount INTEGER, ataqueAmount INTEGER, defensaAmount INTEGER, explorarAmount INTEGER, influenciaAmount INTEGER, terrenosAmount INTEGER, liderBool INTEGER, beneficiarioBool INTEGER, ballotageBool INTEGER, nick TEXT)', [], function(err) {
 				errorHandling(err,db)
 			})
 			.run('CREATE TABLE IF NOT EXISTS tordenes (ordenid INTEGER PRIMARY KEY, userid INTEGER, orden TEXT)', [], function(err) {
@@ -39,13 +41,18 @@ module.exports = {
 			})
 			.run('CREATE TABLE IF NOT EXISTS tlog (logid INTEGER PRIMARY KEY, userid integer, orden text)', [], function(err) {
 				errorHandling(err,db)
-			})
+			});
 			//inserts
 			 //TO-DO: inserts es solo si viene de newgame y habria q recibir la lista de IDs
-			.run('INSERT INTO tcoins (userid,coinsAmount,ataqueAmount,defensaAmount,explorarAmount,influenciaAmount) VALUES (-1,0,0,0,0,0)', [], function(err) {
+			var p = 7 //cantidad de players + 1 mod
+			for (var i=0;i<p;i++){
+			 db.run('INSERT INTO tcoins (userid,coinsAmount,ataqueAmount,defensaAmount,explorarAmount,influenciaAmount,nick) VALUES ('+i+',0,0,0,0,0,"player'+i+'")', [], function(err) {
 				errorHandling(err,db)
-			})
-		
+			});
+			};
+			//db.run('INSERT INTO tcoins (userid,coinsAmount,ataqueAmount,defensaAmount,explorarAmount,influenciaAmount,nick) VALUES (7,0,0,0,0,0,"NanuNanu")', [], function(err) {
+			//	errorHandling(err,db)
+			//});		
 		});
 		
     },
