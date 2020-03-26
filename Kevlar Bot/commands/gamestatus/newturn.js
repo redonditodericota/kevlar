@@ -22,21 +22,33 @@ class newturnCommand extends commando.Command {
 }
 
 function adjudicarRecursos(){
+    // if (message.content.startsWith(prefix + 'commandname')) {
+        //    if (message.author.id !== 'A user ID') return;
+            // Your Command Here
+        //}
+    // var timeturn = 1000 * 60 * 60 * 24    
+    // setIinterval (function, miliseconds variable);
     var tableAmount = ['ataqueAmount','defensaAmount','explorarAmount','influenciaAmount','coinsAmount']
     var dado = [4,8,6,20,12];
     var add = [];
-    for (i=0;i<5;i++){
-        add[i] = utils.tirarDados(dado[i])
-    }
-    console.log(add[0],add[1],add[2],add[3],add[4])
-	let db = dbh.openDatabase();
-        //TO-DO: buscar el usuario id de discord o playerid y usar eso en vez de 0
-    for (i=0;i<5;i++){
-        var query = 'UPDATE tcoins SET ('+tableAmount[i]+') = '+tableAmount[i]+' +'+add[i]+' WHERE userid=0'
-        db.run(query);
-        console.log(query)
-    };
+    let db = dbh.openDatabase();
+    //la variable p es la cantidad de players, deberia estar asociado al gameid
+    for (p=1;p<7;p++){
+        for (i=0;i<5;i++){
+            add[i] = utils.tirarDados(dado[i])
+        }
+        for (i=0;i<5;i++){
+            var query = 'UPDATE tcoins SET ('+tableAmount[i]+') = '+tableAmount[i]+' +'+add[i]+' WHERE userid='+p+''
+            db.run(query);
+        };
+        console.log(add[0],add[1],add[2],add[3],add[4], 'userid =' +p)
+    }; 
 	dbh.closeDatabase(db);
 	
 }
+
+// function process orders
+// function process resources
+// function process pactos
+// function process map
 module.exports = newturnCommand;

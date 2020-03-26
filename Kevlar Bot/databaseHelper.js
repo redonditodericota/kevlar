@@ -29,6 +29,9 @@ module.exports = {
 			.run('DROP TABLE IF EXISTS tlog', [], function(err) {
 				errorHandling(err,db)
 			})
+			.run('DROP TABLE IF EXISTS tmarket', [], function(err) {
+				errorHandling(err,db)
+			})
 			//creates
 			.run('CREATE TABLE IF NOT EXISTS tcoins (userid INTEGER PRIMARY KEY, coinsAmount INTEGER, ataqueAmount INTEGER, defensaAmount INTEGER, explorarAmount INTEGER, influenciaAmount INTEGER, terrenosAmount INTEGER, liderBool INTEGER, beneficiarioBool INTEGER, ballotageBool INTEGER, nick TEXT)', [], function(err) {
 				errorHandling(err,db)
@@ -39,20 +42,21 @@ module.exports = {
 			.run('CREATE TABLE IF NOT EXISTS tmapa (terrenoid INTEGER PRIMARY KEY, userid INTEGER, orden text)', [], function(err) {
 				errorHandling(err,db)
 			})
+			.run('CREATE TABLE IF NOT EXISTS tmarket (tradeid INTEGER PRIMARY KEY, trade TEXT, sendnick TEXT, receivenick TEXT, coinsS INTEGER, ataqueS INTEGER, defensaS INTEGER, explorarS INTEGER, influenciaS INTEGER, coinsR INTEGER, ataqueR INTEGER, defensaR INTEGER, explorarR INTEGER, influenciaR INTEGER)', [], function(err) {
+				errorHandling(err,db)
+			})
 			.run('CREATE TABLE IF NOT EXISTS tlog (logid INTEGER PRIMARY KEY, userid integer, orden text)', [], function(err) {
 				errorHandling(err,db)
 			});
 			//inserts
 			 //TO-DO: inserts es solo si viene de newgame y habria q recibir la lista de IDs
-			var p = 7 //cantidad de players + 1 mod
+			var p = 3 //cantidad de players + 1 mod, el player 0 es el mod // deberia estar asociado al gameid
 			for (var i=0;i<p;i++){
-			 db.run('INSERT INTO tcoins (userid,coinsAmount,ataqueAmount,defensaAmount,explorarAmount,influenciaAmount,nick) VALUES ('+i+',0,0,0,0,0,"player'+i+'")', [], function(err) {
+			db.run('INSERT INTO tcoins (userid,coinsAmount,ataqueAmount,defensaAmount,explorarAmount,influenciaAmount,nick) VALUES ('+i+',0,0,0,0,0,"player'+i+'")', [], function(err) {
 				errorHandling(err,db)
 			});
+			db.run ('UPDATE tcoins SET nick = "mod" WHERE nick="player0"');
 			};
-			//db.run('INSERT INTO tcoins (userid,coinsAmount,ataqueAmount,defensaAmount,explorarAmount,influenciaAmount,nick) VALUES (7,0,0,0,0,0,"NanuNanu")', [], function(err) {
-			//	errorHandling(err,db)
-			//});		
 		});
 		
     },

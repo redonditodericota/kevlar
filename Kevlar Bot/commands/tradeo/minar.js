@@ -32,8 +32,7 @@ class minarCommand extends commando.Command {
         var add = utils.tirarDados(caras)
         message.channel.send('Bien ' + message.author.username + ' minaste ' + add + ' coins.');
         let db = dbh.openDatabase();
-        var query = 'UPDATE tcoins SET '+tableAmount[i]+' = '+tableAmount[i]+' +'+add+' WHERE userid=0'
-        //var query = 'UPDATE tcoins SET '+tableAmount[i]+' = '+tableAmount[i]+' +'+add+' WHERE nick="'+message.author.username+'"'
+        var query = 'UPDATE tcoins SET '+tableAmount[i]+' = '+tableAmount[i]+' +'+add+' WHERE nick="'+message.author.username+'"'
         console.log(query)
         db.run(query);
 		dbh.closeDatabase(db);
