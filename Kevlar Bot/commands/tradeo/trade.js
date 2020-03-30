@@ -152,15 +152,16 @@ function decodeMsg(clean, text){
 
 };
 
-function saveTrade(db, trade, user, canal, recursosdar, recursosrecibir, callback){
+function saveTrade(db, trade, user, canal, recursosdar, recursosrecibir){
 
 	let sql2 = 'INSERT INTO tmarket (trade,sendnick,receivenick,coinsS,ataqueS,defensaS,explorarS,influenciaS,coinsR,ataqueR,defensaR,explorarR,influenciaR) VALUES ("'+trade+'","'+user+'","'+canal+'","'+recursosdar[4]+'","'+recursosdar[0]+'","'+recursosdar[1]+'","'+recursosdar[2]+'","'+recursosdar[3]+'","'+recursosrecibir[4]+'","'+recursosrecibir[0]+'","'+recursosrecibir[1]+'","'+recursosrecibir[2]+'","'+recursosrecibir[3]+'")'
 		db.run(sql2, [], function(err) {
 			if (err) {
 				throw err;
 			}
+			console.log('Trade '+trade+' Saved')
 		});
-		callback;
+
 		return;
 };	
 
@@ -169,4 +170,5 @@ function sendTrade(user, trade, canal, channel){
 		channel.send('Trade Abierto: '+trade+'');
 	}
 	else {channel.send(''+user+' quiere tradear con vos: '+trade+'')};
+	return;
 };
