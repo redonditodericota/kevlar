@@ -31,9 +31,10 @@ class tradeCommand extends commando.Command {
 		var recursosrecibir = returnValues[3];
 		
 		var channel = message.guild.channels.find(channel => channel.name === ''+canal+'');
-		
-		checkPlayerExists(db, user) == user && saveTrade(db, trade, user, canal, recursosdar, recursosrecibir) & sendTrade(user, trade, canal, channel);
-		
+		checkPlayerExists(db, user, function(){
+			saveTrade(db, trade, user, canal, recursosdar, recursosrecibir);
+			sendTrade(user, trade, canal, channel)
+		});
 		dbh.closeDatabase(db);
 	
 	};
@@ -51,14 +52,20 @@ class tradeCommand extends commando.Command {
 
 module.exports = tradeCommand;
 
-function checkPlayerExists(db, user){
-	let sql = ('SELECT nick nick FROM tcoins WHERE nick = ? ORDER BY nick');
+function checkPlayerExists(db, user, action){
+	let sql = ('SELECT nick FROM tcoins WHERE nick = ? LIMIT 1');
 	db.each(sql, [user], (err, row) => {
 		if (err) {
+			console.log(err);
     	   throw err;
 		};
-		return row.nick;
+		//SI EL SQL DEVOLVIO ALGO, HAY PLAYER
+		console.log("HAY PLAYER");
+		action();
+		return; //SALGO DE LA FUNCION FORZADAMENTE
 	});
+	//SI NO SALIO DE LA FUNCION, ES PORQUE NO HABIA PLAYER
+	console.log("NO HAY PLAYER - ¿hacer algo aca?");
 };
 		
 function decodeMsg(clean, text){
@@ -148,21 +155,19 @@ function decodeMsg(clean, text){
 
 function saveTrade(db, trade, user, canal, recursosdar, recursosrecibir){
 
-	let sql2 = 'INSERT INTO tmarket (trade,sendnick,receivenick,coinsS,ataqueS,defensaS,explorarS,influenciaS,coinsR,ataqueR,defensaR,explorarR,influenciaR) VALUES ("'+trade+'","'+user+'","'+canal+'","'+recursosdar[4]+'","'+recursosdar[0]+'","'+recursosdar[1]+'","'+recursosdar[2]+'","'+recursosdar[3]+'","'+recursosrecibir[4]+'","'+recursosrecibir[0]+'","'+recursosrecibir[1]+'","'+recursosrecibir[2]+'","'+recursosrecibir[3]+'")'
-		db.run(sql2, [], function(err) {
-			if (err) {
-				throw err;
-			}
-			console.log('Trade '+trade+' Saved')
-		});
-
-		return;
+	let sql2 = 'INSERT INTO tmarket (trade,sendnick,receivenick,coinsS,ataqueS,defensaS,explorarS,influenciaS,coinsR,ataqueR,defensaR,explorarR,influenciaR) VALUES ("'+trade+'","'+user+'","'+canal+'","'+recursosdar[4]+'","'+recursosdar[0]+'","'+recursosdar[1]+'","'+recursosdar[2]+'","'+recursosdar[3]+'","'+recursosrecibir[4]+'","'+recursosrecibir[0]+'","'+recursosrecibir[1]+'","'+recursosrecibir[2]+'","'+recursosrecibir[3]+'")';
+	db.run(sql2, [], function(err) {
+		if (err) {
+			throw err;
+		}
+		console.log('Trade '+trade+' Saved')
+	});
 };	
 
 function sendTrade(user, trade, canal, channel){
 	if (canal == 'general'){
 		channel.send('Trade Abierto: '+trade+'');
-	}
-	else {channel.send(''+user+' quiere tradear con vos: '+trade+'')};
-	return;
+	} else {
+		channel.send(''+user+' quiere tradear con vos: '+trade+'')
+	};
 };
