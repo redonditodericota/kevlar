@@ -8,7 +8,9 @@ module.exports = {
 	
     openDatabase,
 
-    closeDatabase,
+	closeDatabase,
+	
+	errorHandling,
 	
 	resetDatabase:function() {
 		//bbdd principal
@@ -21,19 +23,40 @@ module.exports = {
 			.run('DROP TABLE IF EXISTS tordenes', [], function(err) {
 				errorHandling(err,db)
 			})
+			.run('DROP TABLE IF EXISTS tmapa', [], function(err) {
+				errorHandling(err,db)
+			})
+			.run('DROP TABLE IF EXISTS tlog', [], function(err) {
+				errorHandling(err,db)
+			})
+			.run('DROP TABLE IF EXISTS tmarket', [], function(err) {
+				errorHandling(err,db)
+			})
 			//creates
-			.run('CREATE TABLE IF NOT EXISTS tcoins (userid INTEGER PRIMARY KEY, amount INTEGER)', [], function(err) {
+			.run('CREATE TABLE IF NOT EXISTS tcoins (userid INTEGER PRIMARY KEY, coinsAmount INTEGER, ataqueAmount INTEGER, defensaAmount INTEGER, explorarAmount INTEGER, influenciaAmount INTEGER, terrenosAmount INTEGER, liderBool INTEGER, beneficiarioBool INTEGER, ballotageBool INTEGER, nick TEXT)', [], function(err) {
 				errorHandling(err,db)
 			})
-			.run('CREATE TABLE IF NOT EXISTS tordenes (ordenid INTEGER PRIMARY KEY, userid integer, orden text)', [], function(err) {
+			.run('CREATE TABLE IF NOT EXISTS tordenes (ordenid INTEGER PRIMARY KEY, userid INTEGER, orden TEXT)', [], function(err) {
 				errorHandling(err,db)
 			})
+			.run('CREATE TABLE IF NOT EXISTS tmapa (terrenoid INTEGER PRIMARY KEY, userid INTEGER, orden text)', [], function(err) {
+				errorHandling(err,db)
+			})
+			.run('CREATE TABLE IF NOT EXISTS tmarket (tradeid INTEGER PRIMARY KEY, trade TEXT, sendnick TEXT, receivenick TEXT, coinsS INTEGER, ataqueS INTEGER, defensaS INTEGER, explorarS INTEGER, influenciaS INTEGER, coinsR INTEGER, ataqueR INTEGER, defensaR INTEGER, explorarR INTEGER, influenciaR INTEGER)', [], function(err) {
+				errorHandling(err,db)
+			})
+			.run('CREATE TABLE IF NOT EXISTS tlog (logid INTEGER PRIMARY KEY, userid integer, orden text)', [], function(err) {
+				errorHandling(err,db)
+			});
 			//inserts
 			 //TO-DO: inserts es solo si viene de newgame y habria q recibir la lista de IDs
-			.run('INSERT INTO tcoins (userid,amount) VALUES (-1,0)', [], function(err) {
+			var p = 3 //cantidad de players + 1 mod, el player 0 es el mod // deberia estar asociado al gameid
+			for (var i=0;i<p;i++){
+			db.run('INSERT INTO tcoins (userid,coinsAmount,ataqueAmount,defensaAmount,explorarAmount,influenciaAmount,nick) VALUES ('+i+',0,0,0,0,0,"player'+i+'")', [], function(err) {
 				errorHandling(err,db)
-			})
-		
+			});
+			db.run ('UPDATE tcoins SET nick = "mod" WHERE nick="player0"');
+			};
 		});
 		
     },

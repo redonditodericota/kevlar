@@ -1,0 +1,53 @@
+VERSION 1.0.0
+
+MOMENTOS CLAVE
+ NewGame
+ NewTurn (por ahora sera un command, pero luego se tiene que temporizar)
+
+ MODULO TRADE  -- Interactua con tcoins --
+ k trade
+	 k trade (5a, 3d) x (7e) user.id
+	  Player quiere tradear 5 coins de ataque y 3 coins de defensa por 7 coins de explorar con tal player.
+ k inventario
+ k shop
+	 k shop 4i
+	  Player quiere comprar 4 coins de influencia.
+	 
+ MODULO ORDENES  -- Interactua con tordenes y tdiplo --
+ k orden
+	 k atacar D3 (4a) D5
+	  Player ataca D5 desde D3 con 4 coins de ataque.
+	 k defender A2 (3d)
+	  Player defiende A2 con 3 coins de defensa.
+	 k explorar E4
+	  Player explora E4
+	 k minar coins
+	  Player mina coins
+
+ MODULO MAPA  -- Interactua con tmapa --
+ k mapa 
+
+
+TABLAS PRINCIPALES
+ tcoins --> Tabla de Player
+	(PK, user.id, ataque, defensa, explorar, influencia, coins, color, amount terrenos, boolean lider, boolean beneficiario, boolean ballotage)
+ tordenes --> Tabla de Ordenes (deberia resetearse despues de cada NEWTURN)
+	(PK, user.id, terreno origen, terreno destino, amount ataque, amount defensa, amount explorar, amount influencia, boolean minar, boolean cortamambo, boolean desalojo, boolean ballotage, boolean bloqueo)
+ tmapa --> Tabla de Terrenos y sus estados
+	(PK, terreno.id, Bordes+reglade3, boolean explorado, Dueño)
+ tlog --> Tabla Log de todas las ordenes que se accionan
+	(PK, Turno, Orden)	  
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+VERSION 2.0.0
+ Mapa Grafico
+
+ORDENES SECUNDARIAS
+ k diplo (ordenes - tdiplo)
+ k tecnologia (shop - ttecno)
+ k ballotage (ordenes)
+ k beneficiario (temporales)
+ k reglas
+ k mecenazgo (temporales)

@@ -2,17 +2,16 @@
 const commando = require('discord.js-commando');
 const path = require('path');
 const config = require('./config.json');
-const dbh = require('./databaseHelper.js'); 
 
 //CORE
 
 const bot = initializeBot();
 
-dbh.resetDatabase();
-
 juanmaFeature();
 
-bot.login(config.token); 
+channelGet();
+
+bot.login(config.token);
 
 
 //FUNCIONES:
@@ -40,7 +39,6 @@ function initializeBot(){
 	return bot
 }
 
-
 function juanmaFeature(){
 	bot.on('message', (message) => {
 		if(message.content.toLowerCase().includes('juanma')){
@@ -48,4 +46,14 @@ function juanmaFeature(){
 		}
 	});
 }
+
+function channelGet(){
+	bot.on('message', (message) => {
+		if(message.content.toLowerCase().includes('damelo')){
+			bot.channels.find("name", "nanunanu").send('aca tenes');	
+		}
+	});
+}
+
+
 
