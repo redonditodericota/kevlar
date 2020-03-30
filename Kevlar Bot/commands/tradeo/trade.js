@@ -32,15 +32,9 @@ class tradeCommand extends commando.Command {
 		
 		var channel = message.guild.channels.find(channel => channel.name === ''+canal+'');
 		
-		checkPlayerexists(db, user, 
-			saveTrade(db, trade, user, canal, recursosdar, recursosrecibir,
-				sendTrade(user, trade, canal, channel)));
-		
+		checkPlayerExists(db, user) == user && saveTrade(db, trade, user, canal, recursosdar, recursosrecibir) & sendTrade(user, trade, canal, channel);
 		
 		dbh.closeDatabase(db);
-		
-
-		return;	
 	
 	};
 
@@ -57,20 +51,16 @@ class tradeCommand extends commando.Command {
 
 module.exports = tradeCommand;
 
-function checkPlayerexists(db, user, callback){
-	let sql = ('SELECT DISTINCT nick nick FROM tcoins ORDER BY nick');
-	db.all(sql, [], (err, rows) => {
+function checkPlayerExists(db, user){
+	let sql = ('SELECT nick nick FROM tcoins WHERE nick = ? ORDER BY nick');
+	db.each(sql, [user], (err, row) => {
 		if (err) {
     	   throw err;
 		};
-		rows.forEach((row) => {
-			if (row.nick === user){
-				callback;
-			};
-		});
+		return row.nick;
 	});
-};		
-
+};
+		
 function decodeMsg(clean, text){
 		
 		if (!clean.includes("@")){
@@ -156,15 +146,16 @@ function decodeMsg(clean, text){
 
 };
 
-function saveTrade(db, trade, user, canal, recursosdar, recursosrecibir, callback){
+function saveTrade(db, trade, user, canal, recursosdar, recursosrecibir){
 
 	let sql2 = 'INSERT INTO tmarket (trade,sendnick,receivenick,coinsS,ataqueS,defensaS,explorarS,influenciaS,coinsR,ataqueR,defensaR,explorarR,influenciaR) VALUES ("'+trade+'","'+user+'","'+canal+'","'+recursosdar[4]+'","'+recursosdar[0]+'","'+recursosdar[1]+'","'+recursosdar[2]+'","'+recursosdar[3]+'","'+recursosrecibir[4]+'","'+recursosrecibir[0]+'","'+recursosrecibir[1]+'","'+recursosrecibir[2]+'","'+recursosrecibir[3]+'")'
 		db.run(sql2, [], function(err) {
 			if (err) {
 				throw err;
 			}
+			console.log('Trade '+trade+' Saved')
 		});
-		callback;
+
 		return;
 };	
 
@@ -173,4 +164,5 @@ function sendTrade(user, trade, canal, channel){
 		channel.send('Trade Abierto: '+trade+'');
 	}
 	else {channel.send(''+user+' quiere tradear con vos: '+trade+'')};
+	return;
 };
