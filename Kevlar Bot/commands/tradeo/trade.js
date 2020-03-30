@@ -32,16 +32,13 @@ class tradeCommand extends commando.Command {
 		
 		var channel = message.guild.channels.find(channel => channel.name === ''+canal+'');
 		
-		checkPlayerexists(db, user, 
-			saveTrade(db, trade, user, canal, recursosdar, recursosrecibir,
-				sendTrade(user, trade, canal, channel)));
-		
+		checkPlayerExists(db, user, function(){
+			saveTrade(db, trade, user, canal, recursosdar, recursosrecibir);
+			sendTrade(user, trade, canal, channel);
+		});
 		
 		dbh.closeDatabase(db);
-		
-
-		return;	
-	
+			
 	};
 
 };
@@ -57,18 +54,17 @@ class tradeCommand extends commando.Command {
 
 module.exports = tradeCommand;
 
-function checkPlayerexists(db, user, callback){
-	let sql = ('SELECT DISTINCT nick nick FROM tcoins ORDER BY nick');
+function checkPlayerExists(db, user, callback){
+	let sql = ('SELECT nick FROM tcoins WHERE nick = ? LIMIT 1');
 	db.all(sql, [], (err, rows) => {
 		if (err) {
     	   throw err;
 		};
-		rows.forEach((row) => {
-			if (row.nick === user){
-				callback;
-			};
-		});
+		console.log('Player Exists');
+		callback();
+		return;
 	});
+	console.log('Player Does Not Exist')
 };		
 
 function decodeMsg(clean, text){
